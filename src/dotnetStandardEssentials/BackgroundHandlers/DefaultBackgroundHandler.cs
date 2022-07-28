@@ -16,6 +16,10 @@ namespace dotnetStandardEssentials
         private readonly ILogger _logger;
         private readonly INotificationHandler _notificationHandler;
         private List<GeneralMessage> _notifications => _notificationHandler.Notifications;
+        private Dictionary<string, DateTime> _errorTimestamps = new Dictionary<string, DateTime>();
+        private const long TICKS_PER_MILLISECOND = 10000;
+        private const long TICKS_PER_SECOND = (long)10e6;
+        private const double DEFAULT_CONTROLLED_NOTIFY_DELAY = 10.0;
         #endregion
 
         #region Properties
@@ -165,27 +169,54 @@ namespace dotnetStandardEssentials
 
         public void Notify(GeneralMessage logMessage, bool saveToLog = true)
         {
-            if (!BuildMessagesLogOnly || (BuildMessagesLogOnly && IsStartupFinished))
+            try
             {
-                if (logMessage.MessageType != GeneralMessageType.Info)
+                if (!BuildMessagesLogOnly || (BuildMessagesLogOnly && IsStartupFinished))
                 {
-                    _notificationHandler.AddNotification(logMessage);
+                    if (logMessage.MessageType != GeneralMessageType.Info)
+                    {
+                        _notificationHandler.AddNotification(logMessage);
+                    }
+                }
+
+                if (!IsStartupFinished)
+                {
+                    _messenger.Send(new NotifyBuildMessage(logMessage));
+                }
+
+                _messenger.Send(new NotifyMessage(logMessage));
+
+                if (saveToLog)
+                {
+                    Log(logMessage);
+                }
+
+                ProcessNotification();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+        }
+
+        public void ControlledNotify(string message, GeneralMessageType messageType, double delaySeconds = DEFAULT_CONTROLLED_NOTIFY_DELAY, bool saveToLog = true)
+        {
+            var now = DateTime.Now;
+            TimeSpan delayTimespan = new TimeSpan(ticks: (long)(delaySeconds * TICKS_PER_SECOND));
+            if (_errorTimestamps.TryGetValue(message, out DateTime previousMessageTime))
+            {
+                if (now - previousMessageTime > delayTimespan)
+                {
+                    Notify(message, messageType, saveToLog);
+                    _errorTimestamps[message] = now;
                 }
             }
-
-            if (!IsStartupFinished)
+            else
             {
-                _messenger.Send(new NotifyBuildMessage(logMessage));
+                _errorTimestamps.TryAdd(message, now);
+                Notify(message, messageType, saveToLog);
             }
-
-            _messenger.Send(new NotifyMessage(logMessage));
-
-            if (saveToLog)
-            {
-                Log(logMessage);
-            }
-
-            ProcessNotification();
         }
 
         public void NotifyRange(IEnumerable<GeneralMessage> messages, bool saveToLog = true)
@@ -250,7 +281,7 @@ namespace dotnetStandardEssentials
             return Task.CompletedTask;
         }
 
-        public Task Clear()
+        public Task ClearAsync()
         {
             _notificationHandler.Clear();
             UpdateNotification();
@@ -321,6 +352,13 @@ namespace dotnetStandardEssentials
 
             await DismissCurrentMessage().ConfigureAwait(false);
         }
+
+        public void SetApplicationStatus(string statusMessage)
+        {
+            SendMessage(new ApplicationStatusMessage(statusMessage));
+        }
+
+
 
 
 

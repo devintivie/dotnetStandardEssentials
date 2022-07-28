@@ -31,6 +31,6 @@ namespace dotnetStandardEssentials.Configurations
         /// </summary>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        Task SaveConfigurationAsync(string configurationName = default);
+        Task SaveConfigurationAsync(string? configurationName = default);
     }
 }

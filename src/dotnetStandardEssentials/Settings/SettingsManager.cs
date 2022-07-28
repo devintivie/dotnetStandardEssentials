@@ -20,7 +20,7 @@ namespace dotnetStandardEssentials
         #region Fields
         private const string SETTINGS_FILENAME = "settings.json";
         private const string DEFAULT_CONFIG_EXT = ".json";
-
+        private const string DEFAULT_CONFIG_FILE = "";
         private IBackgroundHandler _backgroundHandler;
         #endregion
 
@@ -28,7 +28,7 @@ namespace dotnetStandardEssentials
         public ApplicationPlatform Platform { get; private set; }
         public string ConfigFileDirectory { get; private set; }
         public string ConfigFileExt { get; private set; } = DEFAULT_CONFIG_EXT;
-        public string ConfigFile { get; set; } = null;
+        public string ConfigFile { get; set; } = DEFAULT_CONFIG_FILE;
         public ConfigurationType ConfigType { get; set; } = ConfigurationType.LocalJSON;
         public List<string> LoadableConfigFiles { get; set; } = new List<string>();
         #endregion
@@ -129,7 +129,7 @@ namespace dotnetStandardEssentials
             }
         }
 
-        public async Task<string> GetPreviousConfiguration()//bool startFresh = false)
+        public async Task<string> GetPreviousConfigurationAsync()//bool startFresh = false)
         {
             ApplicationSettings settings;
             string fullPath = Path.Combine(ConfigFileDirectory, SETTINGS_FILENAME);
@@ -162,7 +162,7 @@ namespace dotnetStandardEssentials
 
             if (ConfigFile != null)
             {
-                CheckConfigFile();
+                CheckConfigFile(ConfigFile);
             }
 
             return ConfigFile;
@@ -188,22 +188,22 @@ namespace dotnetStandardEssentials
         /// <returns></returns>
         public Task<string> UseConfigFile(string filename)
         {
-            ConfigFile = filename;
-            CheckConfigFile();
+            ConfigFile = filename ?? DEFAULT_CONFIG_FILE;
+            CheckConfigFile(ConfigFile);
             return Task.FromResult(ConfigFile);
         }
 
         /// <summary>
         /// Check that config file exists
         /// </summary>
-        private void CheckConfigFile()
+        private void CheckConfigFile(string configFile)
         {
             IEnumerable<string> files = FindLoadableConfigFiles();
 
-            if (!files.Any(ConfigFile.Contains))
+            if (!files.Any(configFile.Contains))
             {
                 _backgroundHandler.Notify($"Config File {ConfigFile} not found", GeneralMessageType.Warning);
-                ConfigFile = null;
+                ConfigFile = DEFAULT_CONFIG_FILE;
             }
         }
 
@@ -213,7 +213,7 @@ namespace dotnetStandardEssentials
         /// <param name="settings">Loaded ApplicationSettings</param>
         private void SetParametersFromApplicationSettings(ApplicationSettings settings)
         {
-            ConfigFile = settings.LastConfigFile;
+            ConfigFile = settings.LastConfigFile ?? DEFAULT_CONFIG_FILE;
             ConfigType = settings.ConfigurationType;
 
             //If, for some reason, config path is null upon loading, default to the settings base path

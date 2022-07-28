@@ -12,6 +12,7 @@ namespace dotnetStandardEssentials
         void SendMessage<T>(T message);
         void SendMessage<T>(T message, object context);
         void UnregisterMessages(object recipient);
+        void SetApplicationStatus(string statusMessage);
         #endregion
 
         #region Logger
@@ -32,6 +33,7 @@ namespace dotnetStandardEssentials
         void Notify(string message, GeneralMessageType logType, bool saveToLog = true);
         void Notify(GeneralMessage message, bool saveToLog = true);
         void NotifyRange(IEnumerable<GeneralMessage> messages, bool saveToLog = true);
+        void ControlledNotify(string message, GeneralMessageType messageType, double delaySeconds = 10.0, bool saveToLog = true);
         //Task<bool> ConfirmAsync(string message);//, Action<bool> action);
         Task DismissCurrentMessage();
         Task DismissMessage(int index);
@@ -40,7 +42,7 @@ namespace dotnetStandardEssentials
         Task ShowPreviousMessage();
         Task IgnoreAllMessagesWithCurrentMessage();
         void IgnoreAllMessagesWithSpecificTopic(string topic);
-        Task Clear();
+        Task ClearAsync();
         #endregion
 
     }

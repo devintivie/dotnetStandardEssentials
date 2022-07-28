@@ -72,7 +72,7 @@ namespace dotnetStandardEssentials
             Configuration = new T();
         }
 
-        public async Task SaveConfigurationAsync(string configuration = default)
+        public async Task SaveConfigurationAsync(string? configuration = default)
         {
             if (configuration != default)
             {

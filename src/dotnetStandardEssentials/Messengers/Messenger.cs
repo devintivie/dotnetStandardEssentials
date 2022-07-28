@@ -68,7 +68,7 @@ namespace dotnetStandardEssentials
         /// </summary>
         /// <param name=""recipient""></param>
         /// <param name=""context""></param>
-        public void Unregister(object recipient, object context)
+        public void Unregister(object recipient, object? context)
         {
             object action;
             if (context != null)

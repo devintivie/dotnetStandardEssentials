@@ -54,6 +54,15 @@ namespace dotnetStandardEssentials
         }
     }
 
+    public struct ApplicationStatusMessage
+    {
+        public string Message { get; }
+        public ApplicationStatusMessage(string message)
+        {
+            Message = message;
+        }
+    }
+
     public class UpdateErrorMessage
     {
 

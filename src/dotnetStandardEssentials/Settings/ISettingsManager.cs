@@ -46,7 +46,7 @@ namespace dotnetStandardEssentials
         /// Get Previously used <see cref="ApplicationSettings"/> to be loaded again
         /// </summary>
         /// <returns></returns>
-        Task<string> GetPreviousConfiguration();// bool freshStart = false);
+        Task<string> GetPreviousConfigurationAsync();// bool freshStart = false);
 
 
         Task<string> UseConfigFile(string filename);
