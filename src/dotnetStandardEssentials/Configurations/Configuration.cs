@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace dotnetStandardEssentials.Configurations
+namespace DotNetStandardEssentials.Configurations
 {
     public abstract class Configuration : IConfiguration
     {

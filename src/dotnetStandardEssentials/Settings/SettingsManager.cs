@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials
+namespace DotNetStandardEssentials
 {
     /// <summary>
     /// Save and load local settings files. 
@@ -141,7 +141,9 @@ namespace dotnetStandardEssentials
                 SetParametersFromApplicationSettings(settings);
             }
             catch (Exception ex)
-                when (ex is FileNotFoundException || ex is JsonReaderException || ex is NullReferenceException)
+                when (ex is FileNotFoundException 
+                    || ex is JsonReaderException 
+                    || ex is NullReferenceException)
             {
                 await SaveSettingsAsync().ConfigureAwait(false);
 

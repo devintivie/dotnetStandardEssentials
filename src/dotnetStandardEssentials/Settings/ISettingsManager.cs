@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials
+namespace DotNetStandardEssentials
 {
     /// <summary>
     /// Interface to manage application level runtime settings

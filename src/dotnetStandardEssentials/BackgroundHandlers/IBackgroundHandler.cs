@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials
+namespace DotNetStandardEssentials
 {
     public interface IBackgroundHandler
     {
@@ -30,7 +30,7 @@ namespace dotnetStandardEssentials
         bool HasNotifications { get; }
         //List<string> Notifications { get; }
 
-        void Notify(string message, GeneralMessageType logType, bool saveToLog = true);
+        void Notify(string message, GeneralMessageType logType = GeneralMessageType.Warning, bool saveToLog = true);
         void Notify(GeneralMessage message, bool saveToLog = true);
         void NotifyRange(IEnumerable<GeneralMessage> messages, bool saveToLog = true);
         void ControlledNotify(string message, GeneralMessageType messageType, double delaySeconds = 10.0, bool saveToLog = true);

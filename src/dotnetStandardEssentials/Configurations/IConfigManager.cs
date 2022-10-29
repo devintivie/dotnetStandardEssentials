@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials.Configurations
+namespace DotNetStandardEssentials.Configurations
 {
     public interface IConfigManager<T> where T : IConfiguration
     {

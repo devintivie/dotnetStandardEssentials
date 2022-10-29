@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials.Threadsafe
+namespace DotNetStandardEssentials.Threadsafe
 {
     public class AsyncLock : IDisposable
     {

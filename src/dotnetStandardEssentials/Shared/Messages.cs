@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace dotnetStandardEssentials
+namespace DotNetStandardEssentials
 {
     public class ExitMessage
     {
@@ -54,7 +54,7 @@ namespace dotnetStandardEssentials
         }
     }
 
-    public struct ApplicationStatusMessage
+    public class ApplicationStatusMessage
     {
         public string Message { get; }
         public ApplicationStatusMessage(string message)

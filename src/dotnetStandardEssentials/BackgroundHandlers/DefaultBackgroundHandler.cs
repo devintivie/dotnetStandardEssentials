@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials
+namespace DotNetStandardEssentials
 {
     /// <summary>
     /// Default implementation of <see cref="IBackgroundHandler"/>
@@ -96,7 +96,6 @@ namespace dotnetStandardEssentials
             _messenger.Register(recipient, action);
         }
 
-
         /// <summary>
         /// Send message using underlying <see cref="IMessenger"/>
         /// </summary>
@@ -160,7 +159,7 @@ namespace dotnetStandardEssentials
         //    //_messenger.Send(new UpdateViewMessage());
         //}
 
-        public void Notify(string message, GeneralMessageType logType, bool saveToLog = true)
+        public void Notify(string message, GeneralMessageType logType = GeneralMessageType.Warning, bool saveToLog = true)
         {
             var logMessage = new GeneralMessage(message, logType);
             Notify(logMessage);
@@ -341,11 +340,6 @@ namespace dotnetStandardEssentials
             _notificationHandler.IgnoreTopic(topic);
         }
 
-        //public Task<bool> ConfirmAsync(string message)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public async Task DismissMessage(int index)
         {
             NotificationIndex = index;
@@ -357,20 +351,6 @@ namespace dotnetStandardEssentials
         {
             SendMessage(new ApplicationStatusMessage(statusMessage));
         }
-
-
-
-
-
-
-
-
-        //public Task IgnoreAllMessagesWithMessage(string message)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
         #endregion
 
     }

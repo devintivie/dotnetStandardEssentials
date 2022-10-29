@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace dotnetStandardEssentials
+namespace DotNetStandardEssentials
 {
     public class Messenger : IMessenger
     {
@@ -37,7 +37,6 @@ namespace dotnetStandardEssentials
         {
             Register(recipient, action, typeof(T));
         }
-
         /// <summary>
         /// Registers a recipient for a type of message T and a matching context. The action parameter will be executed
         /// when a corresponding message is sent.
@@ -102,7 +101,6 @@ namespace dotnetStandardEssentials
         public void Send<T>(T message)
         {
             Send(message, typeof(T));
-            //Send(message, null);
         }
 
         /// <summary>
@@ -142,7 +140,7 @@ namespace dotnetStandardEssentials
         {
             #region Properties
             public object Recipient { get; private set; }
-            public object Context { get; private set; }
+            public object? Context { get; private set; }
             #endregion
 
             #region Constructors
@@ -151,7 +149,7 @@ namespace dotnetStandardEssentials
             /// </summary>
             /// <param name=""recipient""></param>
             /// <param name=""context""></param>
-            public MessengerKey(object recipient, object context)
+            public MessengerKey(object recipient, object? context)
             {
                 Recipient = recipient;
                 Context = context;
