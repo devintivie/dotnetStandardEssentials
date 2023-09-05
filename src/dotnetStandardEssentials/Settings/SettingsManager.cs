@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using DotNetStandardEssentials.Results;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,15 +80,15 @@ namespace DotNetStandardEssentials
             ConfigFileDirectory = settingsDirectory;
         }
 
-        public bool SetConfigFileDirectory(string directoryPath)
+        public Result SetConfigFileDirectory(string directoryPath)
         {
             if (Directory.Exists(directoryPath))
             {
                 ConfigFileDirectory = directoryPath;
-                return true;
+                return Result.Ok;
             }
 
-            return false;
+            return new Result(new FileNotFoundException());
         }
         #endregion
 
@@ -97,9 +98,9 @@ namespace DotNetStandardEssentials
         /// </summary>
         /// <param name="fullPath">OS full file path</param>
         /// <returns></returns>
-        private async Task<ApplicationSettings> GetSettingsAsync(string fullPath)
+        private async Task<ApplicationSettings?> GetSettingsAsync(string fullPath)
         {
-            ApplicationSettings settings;
+            ApplicationSettings? settings;
 
             if (Platform == ApplicationPlatform.WPF)
             {

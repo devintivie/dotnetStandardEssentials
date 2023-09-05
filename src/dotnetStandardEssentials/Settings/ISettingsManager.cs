@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetStandardEssentials.Results;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace DotNetStandardEssentials
         /// </summary>
         /// <param name="directoryPath"></param>
         /// <returns>Returns true if directory exists and <see cref="ConfigFileDirectory"/> has been updated</returns>
-        bool SetConfigFileDirectory(string directoryPath);
+        Result SetConfigFileDirectory(string directoryPath);
 
         /// <summary>
         /// Find all config files that can be used from current <see cref="ConfigFileDirectory"/>
@@ -43,10 +44,10 @@ namespace DotNetStandardEssentials
         Task DeleteAllConfigFilesInConfigFileDirectoryAsync();
 
         /// <summary>
-        /// Get Previously used <see cref="ApplicationSettings"/> to be loaded again
+        /// Get previously used <see cref="ApplicationSettings"/> to be loaded again.
         /// </summary>
         /// <returns></returns>
-        Task<string> GetPreviousConfigurationAsync();// bool freshStart = false);
+        Task<string> GetPreviousConfigurationAsync();
 
 
         Task<string> UseConfigFile(string filename);

@@ -22,15 +22,13 @@ namespace DotNetStandardEssentials
 
         #region ErrorHandler
         bool IsStartupFinished { get; set; }
-        //bool IsSystemBuilt { get; set; }
         bool BuildMessagesLogOnly { get; set; }
         GeneralMessage CurrentNotification { get; }
         int NotificationIndex { get; }
         int NotificationCount { get; }
         bool HasNotifications { get; }
-        //List<string> Notifications { get; }
-
         void Notify(string message, GeneralMessageType logType = GeneralMessageType.Warning, bool saveToLog = true);
+        void Notify(Exception exception, GeneralMessageType logType = GeneralMessageType.Warning, bool saveToLog = true);
         void Notify(GeneralMessage message, bool saveToLog = true);
         void NotifyRange(IEnumerable<GeneralMessage> messages, bool saveToLog = true);
         void ControlledNotify(string message, GeneralMessageType messageType, double delaySeconds = 10.0, bool saveToLog = true);

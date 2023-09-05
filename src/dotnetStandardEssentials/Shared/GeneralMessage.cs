@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +13,7 @@ namespace DotNetStandardEssentials
         #region Properties
         public string Message { get; set; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public GeneralMessageType MessageType { get; set; }
         #endregion
 

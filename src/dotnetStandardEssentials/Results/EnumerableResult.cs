@@ -10,13 +10,15 @@ namespace DotNetStandardEssentials.Results
 {
     public class EnumerableResult<T> : Result, IEnumerable<T>
     {
-        public readonly IEnumerable<T> Data;
+        public IEnumerable<T> Data { get; }
+
         public EnumerableResult(T data) : base()
         {
             Data = new List<T> { data }.AsReadOnly();
         }
 
-        public EnumerableResult(IEnumerable<T>? dataEnumerable) : base()
+        public EnumerableResult(IEnumerable<T>? dataEnumerable) 
+            : base()
         {
             if (dataEnumerable is null)
             {
@@ -26,14 +28,19 @@ namespace DotNetStandardEssentials.Results
             {
                 Data = dataEnumerable;
             }
-            
         }
 
-        public EnumerableResult(Exception? exception) : base(exception)
+        public EnumerableResult(Exception? exception) 
+            : base(exception)
         {
             Data = Enumerable.Empty<T>();
         }
-        public EnumerableResult(Result otherResult) : this(otherResult.Exception) { }
+
+        public EnumerableResult(Result otherResult) 
+            : this(otherResult.Exception) 
+        { 
+        
+        }
 
         public IEnumerator<T> GetEnumerator()
         {
@@ -46,5 +53,6 @@ namespace DotNetStandardEssentials.Results
         }
 
         public static implicit operator EnumerableResult<T>(T data) => new EnumerableResult<T>(data);
+
     }
 }

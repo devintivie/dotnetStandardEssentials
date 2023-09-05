@@ -6,27 +6,39 @@ using System.Threading.Tasks;
 
 namespace DotNetStandardEssentials.Results
 {
-    public class DictionaryResult<T, U> : Result
+    public class DictionaryResult<TKey, TValue> : Result where TKey : notnull
     {
-        public readonly Dictionary<T, U> Data;
 
-        public DictionaryResult(Dictionary<T, U> data)
+        private readonly Dictionary<TKey, TValue> _data = new Dictionary<TKey, TValue>();
+
+
+        public Dictionary<TKey, TValue> Data => _data;
+
+
+        public DictionaryResult(Dictionary<TKey, TValue> data)
         {
             if (data is null)
             {
-                Data = new Dictionary<T, U>();
+                _data = new Dictionary<TKey, TValue>();
             }
             else
             {
-                Data = data;
+                _data = data;
             }
         }
 
-        public DictionaryResult(Exception? exception) : base(exception)
+
+        public DictionaryResult(Exception? exception) 
+            : base(exception)
         {
-            Data = new Dictionary<T, U>();
+            _data = new Dictionary<TKey, TValue>();
         }
 
-        public DictionaryResult(Result otherResult) : this(otherResult.Exception) { }
+
+        public DictionaryResult(Result otherResult) 
+            : this(otherResult.Exception) 
+        { 
+
+        }
     }
 }

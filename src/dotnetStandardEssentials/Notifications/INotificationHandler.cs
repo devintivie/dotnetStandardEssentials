@@ -13,7 +13,6 @@ namespace DotNetStandardEssentials
         void DismissNotification(int index);
         void IgnoreMessage(string message);
         void IgnoreTopic(string topic);
-        //int IgnoreMessage(int currentIndex, string message);
         void Clear();
     }
 }

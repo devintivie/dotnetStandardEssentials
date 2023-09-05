@@ -132,37 +132,22 @@ namespace DotNetStandardEssentials
         #endregion
 
         #region NotificationHandler Methods
-        //public void Notify(string message, LogType logType, bool saveToLog = true)
-        //{
-        //    var logMessage = new LogMessage(message, logType);
-        //    if (!BuildMessagesLogOnly || (BuildMessagesLogOnly && IsSystemBuilt))
-        //    {
-        //        if (logType != LogType.INFO)
-        //        {
-        //            _notificationHandler.AddNotification(logMessage.ToString());
-        //        }
-        //    }
-
-        //    _messenger.Send(new NotifyMessage(logMessage));
-
-        //    if (saveToLog)
-        //    {
-        //        Log(message, logType);
-        //    }
-
-        //    ProcessNotification();
-        //    //if (Notifications.Count == 1)
-        //    //{
-        //    //    NotificationIndex = 0;
-        //    //    UpdateNotification();
-        //    //}
-        //    //_messenger.Send(new UpdateViewMessage());
-        //}
-
-        public void Notify(string message, GeneralMessageType logType = GeneralMessageType.Warning, bool saveToLog = true)
+        public void Notify(string message
+            , GeneralMessageType logType = GeneralMessageType.Warning
+            , bool saveToLog = true)
         {
-            var logMessage = new GeneralMessage(message, logType);
+            GeneralMessage logMessage = new GeneralMessage(message, logType);
             Notify(logMessage);
+        }
+
+
+
+        public void Notify(Exception exception
+            , GeneralMessageType logType = GeneralMessageType.Error
+            , bool saveToLog = true)
+        {
+            string message = exception.Message;
+            Notify(message, logType);
         }
 
 

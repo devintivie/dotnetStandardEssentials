@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DotNetStandardEssentials.Results;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace DotNetStandardEssentials.Configurations
 {
     public interface IConfigManager<T> where T : IConfiguration
     {
-        T Configuration { get; }
+        //T Configuration { get; }
 
         void CreateDefaultConfiguration();
 
@@ -16,14 +17,14 @@ namespace DotNetStandardEssentials.Configurations
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        Task LoadConfigurationAsync(string filename);
+        Task<Result<T>> LoadConfigurationAsync(string filename);
 
         /// <summary>
         /// Load configuration from file at specified path
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
-        Task LoadConfigurationAsync(string pathToParentDirectory, string filename);
+        Task<Result<T>> LoadConfigurationAsync(string pathToParentDirectory, string filename);
 
         /// <summary>
         /// Saves configuration to current configuarion file directory.
@@ -31,6 +32,6 @@ namespace DotNetStandardEssentials.Configurations
         /// </summary>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        Task SaveConfigurationAsync(string? configurationName = default);
+        Task<Result> SaveConfigurationAsync(string? configurationName = default);
     }
 }

@@ -8,6 +8,7 @@ namespace DotNetStandardEssentials.Results
     {
         bool Success { get; }
         bool Failure { get; }
-        Exception Exception { get; }
+        Exception? Exception { get; }
+        string Message { get; }
     }
 }

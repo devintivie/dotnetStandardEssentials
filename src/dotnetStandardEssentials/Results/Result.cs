@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,30 +13,41 @@ namespace DotNetStandardEssentials.Results
         public bool Failure => !Success;
         public Exception? Exception { get; }
 
-        protected Result()
+        public string Message { get; } = string.Empty;
+
+
+        protected Result(string? message = null)
         {
+            Message = message ?? string.Empty;
         }
 
-        public Result(Exception? exception)
+
+        public Result(Exception? exception, string? message = null)
         {
             Exception = exception;
+            Message = message ?? string.Empty;
         }
+
 
         public Result(Result otherResult)
         {
             Exception = otherResult.Exception;
+            Message = otherResult.Message;
         }
 
+
         public static readonly Result Ok = new Result();
+
     }
 
     public class Result<T> : Result
     {
 #if NET5_0_OR_GREATER
-        public readonly T? Data;
+        public T? Data { get; }
 #else
-        public readonly T Data;
+        public T Data { get; }
 #endif
+
         public Result(T data) : base()
         {
             Data = data;
@@ -43,12 +55,12 @@ namespace DotNetStandardEssentials.Results
 
         public Result(Exception exception) : base(exception)
         {
-            Data = default(T);
+            Data = default;
         }
+
         public Result(Result otherResult) : base(otherResult) { }
 
-
         public static implicit operator Result<T>(T data) => new Result<T>(data);
-        public static implicit operator T(Result<T> otherResult) => otherResult.Data;
+
     }
 }
